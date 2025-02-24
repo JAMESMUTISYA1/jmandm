@@ -23,7 +23,7 @@ const Header = () => {
           <div className="flex items-center">
             <Link href={"/"} className="flex items-center">
               <img
-                src="/logo.png" // Replace with your logo path
+                src="/Logo.png" // Replace with your logo path
                 alt="Logo"
                 className="h-20 w-20"
               />
