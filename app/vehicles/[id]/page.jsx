@@ -176,7 +176,6 @@ const VehicleDetailsPage = () => {
 
               {/* Key Details Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <DetailItem label="Condition Score" value={vehicle.conditionScore} />
                 <DetailItem label="Year of Manufacture" value={vehicle.year} />
                 <DetailItem label="Current Location" value={vehicle.location} />
                 <DetailItem label="Availability" value={vehicle.availability} />
