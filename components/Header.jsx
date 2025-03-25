@@ -27,7 +27,7 @@ const Header = () => {
                 alt="Logo"
                 className="h-20 w-20"
               />
-              <span className="ml-2 text-xl text-black font-semibold">Your Brand</span>
+              <span className="ml-2 text-xl text-black font-semibold">JM and M</span>
             </Link>
           </div>
 

@@ -8,9 +8,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About Section */}
           <div className="space-y-4">
-            <h3 className="text-xl font-bold">About Rave Travels</h3>
+            <h3 className="text-xl font-bold">About JM and M</h3>
             <p className="text-white">
-              Welcome to Rave Travels Company Ltd, your go-to company for affordable and reliable
+              Welcome to JM and M Company Ltd, your go-to company for affordable and reliable
               vehicle experiences in Kenya.
             </p>
           </div>
@@ -63,7 +63,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="border-t border-white mt-8 pt-6 text-center">
           <p className="text-white">
-            © {new Date().getFullYear()} Rave Travels Company Ltd. All rights reserved.
+            © {new Date().getFullYear()} JM and M Company Ltd. All rights reserved.
           </p>
         </div>
       </div>
