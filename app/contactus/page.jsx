@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { db } from '../../Shared/Firebaseconfig'; // Adjust the path to your Firebase config
-import { collection, addDoc } from "firebase/firestore";
+import { db } from '../../../Shared/Firebaseconfig'; // Adjust the path to your Firebase config
+import { collection, addDoc } from "/firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
