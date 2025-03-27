@@ -24,6 +24,8 @@ const AdminUploadPage = () => {
     description: '',
     bodyType: '',
     conditionScore: '',
+    tiktokLink: '',
+    youtubeLink: '',
     images: []
   });
 
@@ -58,7 +60,7 @@ const AdminUploadPage = () => {
     
     try {
       // Upload images first
-      const imageUrls = await uploadImages();
+      const imageUrls = ['/v2/1.png','/v2/2.png','/v2/3.png'];//await uploadImages();
       
       // Prepare vehicle data with image URLs
       const dataToUpload = {
@@ -94,6 +96,8 @@ const AdminUploadPage = () => {
         description: '',
         bodyType: '',
         conditionScore: '',
+        tiktokLink: '',
+        youtubeLink: '',
         images: []
       });
       setImageFiles([]);
@@ -294,6 +298,30 @@ const AdminUploadPage = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md"
               />
             </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Tiktok Link</label>
+              <input
+                type="text"
+                name="tiktokLink"
+                value={vehicleData.tiktokLink}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                placeholder="e.g., 9/10"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Youtube Link</label>
+              <input
+                type="text"
+                name="youtubeLink"
+                value={vehicleData.youtubeLink}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                placeholder="e.g., 9/10"
+              />
+            </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Vehicle Images</label>
@@ -307,6 +335,8 @@ const AdminUploadPage = () => {
               />
               <p className="text-xs text-gray-500 mt-1">Upload multiple images of the vehicle</p>
             </div>
+       
+
           </div>
 
           <div className="mt-8">
