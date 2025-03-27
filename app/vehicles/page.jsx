@@ -305,23 +305,24 @@ const CarListingPage = () => {
                           <span className="text-lg font-bold">Ksh {car.price.toLocaleString()}</span>
                         </div>
                         <div className='flex justify-between gap-2' >
-                          <button className="mt-1  p-2 px-1 bg-black text-red-800 rounded-lg hover:text-white hover:bg-green-700">
-                            Tiktok Review
-                          </button>
-                          <button className="mt-1 p-1 bg-red-600 text-white rounded-lg hover:bg-green-700">
-                            Youtube Review
-                          </button>
+                          <Link className="mt-1  p-2 px-1 bg-black text-red-800 rounded-lg hover:text-white hover:bg-green-700"
+                          href={car.tiktokLink}
+                          >
+                           Tiktok Review
+                          </Link>
+                          <Link className="mt-1 p-1 bg-red-600 text-white rounded-lg hover:bg-green-700"
+                           href={car.youtubeLink}>
+                          Youtube Review
+                          </Link>
                         </div>
-                        <div className='flex justify-between gap-2' >
-                          <button className="mt-4 p-2 bg-green-700 text-white rounded-lg hover:bg-green-900">
-                            Enquire Now
-                          </button>
-                          <Link className="mt-4 p-1  bg-blue-600 text-white rounded-lg hover:bg-green-700"
-                            href={`/vehicles/${car.id}`} >
-                          
-                              More details {">"}
-                            </Link>
-                        </div>
+                        <div className='flex justify-end '>  {/* Changed justify- to justify-end */}
+                              <Link 
+                                className="mt-4 p-1 bg-blue-600 text-white rounded-lg hover:bg-green-700"
+                                href={`/vehicles/${car.id}`}
+                              >
+                                More details {">"}
+                              </Link>
+                            </div>
                       </div>
                     </div>
                   ))}

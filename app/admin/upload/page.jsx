@@ -60,7 +60,7 @@ const AdminUploadPage = () => {
     
     try {
       // Upload images first
-      const imageUrls = ['/v2/1.png','/v2/2.png','/v2/3.png'];//await uploadImages();
+      const imageUrls = ['/v2/1.jpeg','/v2/2.jpeg', '/v2/4.jpeg', '/v2/5.jpeg', '/v2/3.jpeg'];//await uploadImages();
       
       // Prepare vehicle data with image URLs
       const dataToUpload = {
