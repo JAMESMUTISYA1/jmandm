@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { db } from '../../../Shared/Firebaseconfig'; // Adjust the path to your Firebase config
-import { collection, addDoc } from "/firebase/firestore";
+import { db } from '../../Shared/Firebaseconfig'; // Adjust the path to your Firebase config
+import { collection, addDoc } from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -77,12 +77,12 @@ const ContactPage = () => {
 
               <div className="mx-10 lg:mx-40 flex items-center">
                 <img
-                  src="/logo.png" // Replace with your logo path
+                  src="/Logo.png" // Replace with your logo path
                   alt="Logo"
                   className="h-20 w-20"
                 />
                 <span className="ml-2 text-xl text-black font-semibold">
-                  Your Brand
+                JMandM Auto
                 </span>
               </div>
             </div>

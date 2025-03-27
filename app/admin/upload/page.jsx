@@ -8,7 +8,7 @@ import { storage } from '../../../Shared/Firebaseconfig';
 const AdminUploadPage = () => {
   const [vehicleData, setVehicleData] = useState({
     name: '',
-    price: '',
+    price: '', 
     cifPrice: '',
     year: '',
     location: '',
@@ -186,6 +186,7 @@ const AdminUploadPage = () => {
                 </select>
               </div>
             </div>
+          
 
             {/* Technical Specifications */}
             <div className="space-y-4">

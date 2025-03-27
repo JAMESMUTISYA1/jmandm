@@ -51,11 +51,11 @@ const AboutPage = () => {
 
             <div className="mx-10 lg:mx-40 flex items-center">
               <img
-                src="/logo.png" // Replace with your logo path
+                src="/Logo.png" // Replace with your logo path
                 alt="Logo"
                 className="h-20 w-20"
               />
-              <span className="ml-2 text-xl text-black font-semibold">Your Brand</span>
+              <span className="ml-2 text-xl text-black font-semibold">JMandM Auto</span>
             </div>
           </div>
           <p className="mt-6 text-xl text-black max-w-2xl">
