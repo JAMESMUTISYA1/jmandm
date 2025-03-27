@@ -306,12 +306,12 @@ const CarListingPage = () => {
                         </div>
                         <div className='flex justify-between gap-2' >
                           <Link className="mt-1  p-2 px-1 bg-black text-red-800 rounded-lg hover:text-white hover:bg-green-700"
-                          href={car.tiktokLink}
+                          href={`${car.tiktokLink}`}
                           >
                            Tiktok Review
                           </Link>
                           <Link className="mt-1 p-1 bg-red-600 text-white rounded-lg hover:bg-green-700"
-                           href={car.youtubeLink}>
+                           href={`${car.youtubeLink}`}>
                           Youtube Review
                           </Link>
                         </div>
