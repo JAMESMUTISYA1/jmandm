@@ -23,7 +23,7 @@ export default function LoginPage() {
       
       // Redirect to admin dashboard or previous page
       const urlParams = new URLSearchParams(window.location.search);
-      const redirect = urlParams.get('redirect') || '/admin';
+      const redirect = urlParams.get('redirect') || '/admin/dashboard';
       router.push(redirect);
     } catch (err) {
       setError(getErrorMessage(err.code));
