@@ -1,5 +1,5 @@
 import { getAuth, signOut } from 'firebase/auth';
-import { app } from '@/lib/firebase';
+import { app } from '../Shared/Firebaseconfig';
 
 export default function LogoutButton() {
   const handleLogout = async () => {

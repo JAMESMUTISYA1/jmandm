@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import ProtectedRoute from '@/components/ProtectedRoute';
-//import Sidebar from './Sidebar';
+import Sidebar from './Sidebar';
 
 import Header from '@/components/Headeradmin';
 
@@ -24,9 +24,9 @@ export default function AdminLayout({ children }) {
           />
         )}
 
-        {/* Sidebar 
+        {/* Sidebar */}
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-*/}
+
         {/* Main content */}
         <div className="flex-1 flex flex-col overflow-hidden">
          

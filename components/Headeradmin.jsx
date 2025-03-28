@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { getAuth, signOut } from 'firebase/auth';
-import { app } from '@/lib/firebase';
+import { app } from '../Shared/Firebaseconfig';
 
 export default function Header({ onMenuClick }) {
   const router = useRouter();
