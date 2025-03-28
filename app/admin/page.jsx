@@ -1,7 +1,7 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { app } from '../../Shared/Firebaseconfig';
 import Link from 'next/link';
 
@@ -12,6 +12,19 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  // Check auth state on component mount
+  useEffect(() => {
+    const auth = getAuth(app);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirect = urlParams.get('redirect') || '/admin/dashboard';
+        router.push(redirect);
+      }
+    });
+    return () => unsubscribe();
+  }, [router]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -20,32 +33,22 @@ export default function LoginPage() {
     try {
       const auth = getAuth(app);
       await signInWithEmailAndPassword(auth, email, password);
-      
-      // Redirect to admin dashboard or previous page
-      const urlParams = new URLSearchParams(window.location.search);
-      const redirect = urlParams.get('redirect') || '/admin/dashboard';
-      router.push(redirect);
+      // The onAuthStateChanged will handle the redirect
     } catch (err) {
+      console.error('Login error:', err);
       setError(getErrorMessage(err.code));
       setLoading(false);
     }
   };
 
-  // Helper function to convert Firebase error codes to user-friendly messages
   const getErrorMessage = (code) => {
     switch (code) {
-      case 'auth/invalid-email':
-        return 'Invalid email address';
-      case 'auth/user-disabled':
-        return 'Account disabled';
-      case 'auth/user-not-found':
-        return 'Account not found';
-      case 'auth/wrong-password':
-        return 'Incorrect password';
-      case 'auth/too-many-requests':
-        return 'Too many attempts. Try again later';
-      default:
-        return 'Login failed. Please try again';
+      case 'auth/invalid-email': return 'Invalid email address';
+      case 'auth/user-disabled': return 'Account disabled';
+      case 'auth/user-not-found': return 'Account not found';
+      case 'auth/wrong-password': return 'Incorrect password';
+      case 'auth/too-many-requests': return 'Too many attempts. Try again later';
+      default: return 'Login failed. Please try again';
     }
   };
 
