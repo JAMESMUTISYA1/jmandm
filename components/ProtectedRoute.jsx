@@ -2,7 +2,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { auth } from '../../Shared/Firebaseconfig';
+import { auth } from '../Shared/Firebaseconfig';
 import { onAuthStateChanged } from 'firebase/auth';
 
 export default function ProtectedRoute({ children }) {
