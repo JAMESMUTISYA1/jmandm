@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import Sidebar from './Sidebar';
-import './admin.css';
+
 import Header from '@/components/Headeradmin';
 
 export const metadata = {
