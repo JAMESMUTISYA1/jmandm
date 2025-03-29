@@ -1,4 +1,4 @@
-import Sidebar from './Sidebar';
+//import Sidebar from './Sidebar';
 import Header from '@/components/Headeradmin';
 import ProtectedRoute from '@/components/ProtectedRoute';
 
@@ -6,8 +6,8 @@ export default function AdminLayout({ children }) {
   return (
     <ProtectedRoute>
       <div className="flex h-screen bg-gray-100">
-        {/* Sidebar - Always visible on desktop */}
-        <Sidebar />
+        {/* Sidebar  <Sidebar /> - Always visible on desktop */}
+       
 
         {/* Main content */}
         <div className="flex-1 flex flex-col overflow-hidden">
