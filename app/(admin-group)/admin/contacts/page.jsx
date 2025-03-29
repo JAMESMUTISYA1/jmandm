@@ -1,14 +1,22 @@
 "use client";
 import { useState, useEffect } from "react";
 import { db } from '../../../../Shared/Firebaseconfig';
-import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc, addDoc } from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 export default function UsersPage() {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [newContact, setNewContact] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+    contacted: false,
+    createdAt: new Date().toISOString()
+  });
 
   useEffect(() => {
     fetchContacts();
@@ -45,6 +53,35 @@ export default function UsersPage() {
     }
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewContact(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleAddContact = async (e) => {
+    e.preventDefault();
+    try {
+      await addDoc(collection(db, "contacts"), newContact);
+      toast.success("Contact added successfully!");
+      setIsAddModalOpen(false);
+      setNewContact({
+        name: '',
+        email: '',
+        phone: '',
+        message: '',
+        contacted: false,
+        createdAt: new Date().toISOString()
+      });
+      fetchContacts(); // Refresh the list
+    } catch (error) {
+      console.error("Error adding contact: ", error);
+      toast.error("Failed to add contact");
+    }
+  };
+
   const formatDate = (dateString) => {
     if (!dateString) return "Not contacted yet";
     const date = new Date(dateString);
@@ -54,7 +91,15 @@ export default function UsersPage() {
   return (
     <div className="bg-white rounded-lg shadow p-6">
       <ToastContainer />
-      <h1 className="text-2xl font-bold mb-6">Contact Submissions</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Contact Submissions</h1>
+        <button
+          onClick={() => setIsAddModalOpen(true)}
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          Add New Contact
+        </button>
+      </div>
       
       {loading ? (
         <div className="flex justify-center items-center h-64">
@@ -109,6 +154,74 @@ export default function UsersPage() {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {/* Add Contact Modal */}
+      {isAddModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+            <h2 className="text-xl font-bold mb-4">Add New Contact</h2>
+            <form onSubmit={handleAddContact}>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={newContact.name}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={newContact.email}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={newContact.phone}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                <textarea
+                  name="message"
+                  value={newContact.message}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  rows="3"
+                />
+              </div>
+              <div className="flex justify-end space-x-4">
+                <button
+                  type="button"
+                  onClick={() => setIsAddModalOpen(false)}
+                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                >
+                  Add Contact
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
     </div>
