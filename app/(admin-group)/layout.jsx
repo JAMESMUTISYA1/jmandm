@@ -31,10 +31,10 @@ export default function AdminLayout({ children }) {
             <div className="w-64" > {!isAdminDashboard && <Sidebar isLoggedIn={isLoggedIn} />}</div>
            
             {/* Main content area */}
-            <div className={` ${!isAdminDashboard ? '' : 'pl-0'}`}>
+            <div >
              
               
-              <main className=" overflow-y-auto p-4 md:p-6">
+              <main >
                 {children}
               </main>
               
