@@ -7,11 +7,7 @@ export default function Header({ showMenu = true, showLogout = false }) {
     <header className="bg-indigo-600 w-full   shadow-sm fixed">
       <div className="flex items-center justify-between py-5">
 
-      <div className="g-6" > {showMenu && (
-          <button className="lg:hidden">
-            {/* Your menu icon */}MENU
-          </button>
-        )}
+      <div className="g-6" > 
         <p>ADMIN</p></div>
        
          <div className="flex items-center">
@@ -19,7 +15,7 @@ export default function Header({ showMenu = true, showLogout = false }) {
               <img
                 src="/Logo.png" // Replace with your logo path
                 alt="Logo"
-                className="h-20 w-20"
+                className="h-15 w-15 m-0"
               />
               <span className="ml-2 text-xl text-black font-semibold">JM and M</span>
         

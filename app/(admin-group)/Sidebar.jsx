@@ -28,7 +28,7 @@ export default function Sidebar({ isLoggedIn }) {
   ];
 
   return (
-    <div className="hidden  w-64   text-white">
+    <div className="  w-64   text-white">
       <div className="p-4 border-b border-gray-700">
         <h1 className="text-xl font-bold">Welcome Admin </h1>
       </div>
