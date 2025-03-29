@@ -43,7 +43,7 @@ export default function Sidebar() {
   };
 
   const navItems = [
-    { name: 'Dashboard', href: '/admin', icon: <FiHome size={18} /> },
+    { name: 'Dashboard', href: '/admin/dashboard', icon: <FiHome size={18} /> },
     { name: 'Staff', href: '/admin/staff', icon: <FiUsers size={18} /> },
     { name: 'Vehicles', href: '/admin/vehicles', icon: <FiTruck size={18} /> },
     { name: 'Analytics', href: '/admin/analytics', icon: <FiPieChart size={18} /> },
@@ -55,11 +55,6 @@ export default function Sidebar() {
 
   return (
     <div className="w-64 h-screen bg-gray-800 text-white fixed left-0 top-20 flex flex-col ">
-      {/* Header */}
-      <div className="p-4 border-b border-gray-700 flex items-center justify-between">
-        <h1 className="text-xl font-bold">Admin Panel</h1>
-      </div>
-
       {/* User Info */}
       <div className="p-4 border-b border-gray-700 flex items-center space-x-3">
         <div className="bg-blue-500 p-2 rounded-full">
