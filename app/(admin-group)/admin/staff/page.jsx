@@ -2,7 +2,8 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { collection, getDocs, doc, deleteDoc, setDoc } from 'firebase/firestore';
-import { db } from '../../../../Shared/Firebaseconfig';
+import { db, storage } from '../../../../Shared/Firebaseconfig';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -15,8 +16,11 @@ export default function StaffManagement() {
     name: '',
     email: '',
     role: 'staff',
-    phone: ''
+    phone: '',
+    imageUrl: ''
   });
+  const [imageFile, setImageFile] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   useEffect(() => {
     fetchStaff();
@@ -43,20 +47,58 @@ export default function StaffManagement() {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+    }
+  };
+
+  const uploadImage = async () => {
+    if (!imageFile) return null;
+    
+    const storageRef = ref(storage, `staff-images/${Date.now()}_${imageFile.name}`);
+    const uploadTask = uploadBytes(storageRef, imageFile);
+    
+    try {
+      const snapshot = await uploadTask;
+      const downloadURL = await getDownloadURL(snapshot.ref);
+      return downloadURL;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      toast.error('Failed to upload image');
+      return null;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      let imageUrl = formData.imageUrl;
+      
+      // Upload new image if selected
+      if (imageFile) {
+        imageUrl = await uploadImage();
+        if (!imageUrl) return;
+      }
+
+      const staffData = {
+        ...formData,
+        imageUrl: imageUrl || ''
+      };
+
       if (currentStaff) {
         // Update existing staff
-        await setDoc(doc(db, 'ourstaff', currentStaff.id), formData);
+        await setDoc(doc(db, 'ourstaff', currentStaff.id), staffData);
         toast.success('Staff updated successfully');
       } else {
         // Add new staff
         const newStaffRef = doc(collection(db, 'ourstaff'));
-        await setDoc(newStaffRef, formData);
+        await setDoc(newStaffRef, staffData);
         toast.success('Staff added successfully');
       }
+      
       setIsModalOpen(false);
+      setImageFile(null);
       fetchStaff();
     } catch (error) {
       console.error('Error saving staff:', error);
@@ -83,8 +125,10 @@ export default function StaffManagement() {
       name: staff.name,
       email: staff.email,
       role: staff.role,
-      phone: staff.phone
+      phone: staff.phone,
+      imageUrl: staff.imageUrl || ''
     });
+    setImageFile(null);
     setIsModalOpen(true);
   };
 
@@ -94,8 +138,10 @@ export default function StaffManagement() {
       name: '',
       email: '',
       role: 'staff',
-      phone: ''
+      phone: '',
+      imageUrl: ''
     });
+    setImageFile(null);
     setIsModalOpen(true);
   };
 
@@ -124,6 +170,7 @@ export default function StaffManagement() {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
@@ -134,6 +181,19 @@ export default function StaffManagement() {
             <tbody className="bg-white divide-y divide-gray-200">
               {staff.map((staff) => (
                 <tr key={staff.id}>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {staff.imageUrl ? (
+                      <img 
+                        src={staff.imageUrl} 
+                        alt={staff.name}
+                        className="h-10 w-10 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                        <span className="text-xs text-gray-500">No Image</span>
+                      </div>
+                    )}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{staff.name}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{staff.email}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 capitalize">{staff.role}</td>
@@ -167,6 +227,33 @@ export default function StaffManagement() {
               {currentStaff ? 'Edit Staff' : 'Add New Staff'}
             </h2>
             <form onSubmit={handleSubmit}>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">Profile Image</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                />
+                {formData.imageUrl && !imageFile && (
+                  <div className="mt-2">
+                    <img 
+                      src={formData.imageUrl} 
+                      alt="Current staff" 
+                      className="h-20 w-20 rounded-full object-cover"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Current image</p>
+                  </div>
+                )}
+                {uploadProgress > 0 && uploadProgress < 100 && (
+                  <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+                    <div 
+                      className="bg-blue-600 h-2.5 rounded-full" 
+                      style={{ width: `${uploadProgress}%` }}
+                    ></div>
+                  </div>
+                )}
+              </div>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
                 <input
