@@ -4,7 +4,7 @@
 export default function Header({ showMenu = true, showLogout = false }) {
  
   return (
-    <header className="bg-indigo-600 w-full   shadow-sm fixed">
+    <header className="bg-indigo-600 w-full h-17   shadow-sm fixed">
       <div className="flex items-center justify-between py-5">
 
       <div className="g-6" > 
