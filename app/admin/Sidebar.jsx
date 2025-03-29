@@ -1,14 +1,21 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FiHome, FiUsers, FiCar, FiPieChart, FiSettings, FiFileText } from 'react-icons/fi';
+import { 
+  FiHome, 
+  FiUsers, 
+  FiTruck,  // Changed from FiCar to FiTruck
+  FiPieChart, 
+  FiSettings, 
+  FiFileText 
+} from 'react-icons/fi';
 
 export default function Sidebar({ isOpen, onClose }) {
   const pathname = usePathname();
 
   const navItems = [
     { name: 'Dashboard', href: '/admin', icon: <FiHome className="w-5 h-5" /> },
-    { name: 'Vehicles', href: '/admin/vehicles', icon: <FiCar className="w-5 h-5" /> },
+    { name: 'Vehicles', href: '/admin/vehicles', icon: <FiTruck className="w-5 h-5" /> }, // Changed to FiTruck
     { name: 'Users', href: '/admin/users', icon: <FiUsers className="w-5 h-5" /> },
     { name: 'Analytics', href: '/admin/analytics', icon: <FiPieChart className="w-5 h-5" /> },
     { name: 'Reports', href: '/admin/reports', icon: <FiFileText className="w-5 h-5" /> },
