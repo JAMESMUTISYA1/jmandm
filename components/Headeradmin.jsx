@@ -4,7 +4,7 @@
 export default function Header({ showMenu = true, showLogout = false }) {
  
   return (
-    <header className="bg-indigo-600  h-40 shadow-sm">
+    <header className="bg-indigo-600  h-23 shadow-sm">
       <div className="flex items-center justify-between p-4">
 
       <div className="g-6" > {showMenu && (
