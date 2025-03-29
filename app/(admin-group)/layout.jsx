@@ -27,11 +27,11 @@ export default function AdminLayout({ children }) {
       <html lang="en" className="h-full">
         <body className="h-full">
         <Header showMenu={!isAdminDashboard} showLogout={isLoggedIn} />
-          <div className="flex h-screen bg-gray-100">
-            <div> {!isAdminDashboard && <Sidebar isLoggedIn={isLoggedIn} />}</div>
+          <div className="flex w-full h-screen bg-gray-100">
+            <div className="w-64" > {!isAdminDashboard && <Sidebar isLoggedIn={isLoggedIn} />}</div>
            
             {/* Main content area */}
-            <div className={` overflow-hidden ${!isAdminDashboard ? '' : 'pl-0'}`}>
+            <div className={` ${!isAdminDashboard ? '' : 'pl-0'}`}>
              
               
               <main className=" overflow-y-auto p-4 md:p-6">
