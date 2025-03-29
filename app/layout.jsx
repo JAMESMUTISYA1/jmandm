@@ -19,10 +19,11 @@ const Layout = ({ children }) => {
         <TopBar/>
       <Header/>
       <main>
+
         {children}
-      
+       <Footer/>
         </main>
-  <Footer/>
+ 
     </body></html></>
   );
 };
