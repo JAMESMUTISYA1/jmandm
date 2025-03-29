@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-import { app } from '../../../Shared/Firebaseconfig';
+import { app } from '../../../../Shared/Firebaseconfig';
 import Link from 'next/link';
 
 export default function LoginPage() {
