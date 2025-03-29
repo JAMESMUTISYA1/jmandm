@@ -84,19 +84,19 @@ export default function Sidebar() {
               </Link>
             </li>
           ))}
-        </ul>
-      </nav>
-
-      {/* Footer */}
-      <div className="p-4 border-t border-gray-700">
-        <button
+         <li>
+           <button
           onClick={handleLogout}
           className="flex items-center justify-center w-full p-3 rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"
         >
           <span className="mr-3"><FiLogOut size={18} /></span>
           <span className="text-sm">Logout</span>
         </button>
-      </div>
+         </li>
+        </ul>
+      </nav>
+
+      
     </div>
   );
 }
