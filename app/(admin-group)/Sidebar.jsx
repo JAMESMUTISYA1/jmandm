@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FiHome, FiUsers, FiTruck, FiPieChart, FiSettings, FiFileText, FiLogOut } from 'react-icons/fi';
 import { getAuth, signOut } from 'firebase/auth';
-import { app } from '@/lib/firebase';
+import { app } from '../../../Shared/Firebaseconfig';
 import { useRouter } from 'next/navigation';
 
 export default function Sidebar({ isLoggedIn }) {
