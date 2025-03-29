@@ -24,11 +24,15 @@ export default function Sidebar({ isLoggedIn }) {
   const navItems = [
     { name: 'Dashboard', href: '/admin', icon: <FiHome /> },
     { name: 'Vehicles', href: '/admin/vehicles', icon: <FiTruck /> },
+    { name: 'Vehicles', href: '/admin/vehicles', icon: <FiTruck /> },
+    { name: 'Vehicles', href: '/admin/vehicles', icon: <FiTruck /> },
+    { name: 'Vehicles', href: '/admin/vehicles', icon: <FiTruck /> },
+    { name: 'Vehicles', href: '/admin/vehicles', icon: <FiTruck /> },
     // ... other nav items
   ];
 
   return (
-    <div className="  w-64   text-white">
+    <div className="hidden text-black">
       <div className="p-4 border-b border-gray-700">
         <h1 className="text-xl font-bold">Welcome Admin </h1>
       </div>
