@@ -11,7 +11,7 @@ export default function ProtectedRoute({ children }) {
     const auth = getAuth(app);
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
-        router.push('/login?redirect=' + encodeURIComponent(window.location.pathname));
+        router.push('/admin?redirect=' + encodeURIComponent(window.location.pathname));
       }
     });
     return () => unsubscribe();
