@@ -4,12 +4,12 @@
 export default function Header({ showMenu = true, showLogout = false }) {
  
   return (
-    <header className="bg-indigo-600 w-full  h-21 shadow-sm fixed">
-      <div className="flex items-center justify-between p-4">
+    <header className="bg-indigo-600 w-full   shadow-sm fixed">
+      <div className="flex items-center justify-between p-1">
 
       <div className="g-6" > {showMenu && (
           <button className="lg:hidden">
-            {/* Your menu icon */}
+            {/* Your menu icon */}MENU
           </button>
         )}
         <p>ADMIN</p></div>
