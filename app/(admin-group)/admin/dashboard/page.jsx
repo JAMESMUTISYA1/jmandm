@@ -14,7 +14,7 @@ import {
   Legend
 } from 'chart.js';
 import ProtectedRoute from '@/components/ProtectedRoute';
-import { db } from '../../Shared/Firebaseconfig';
+import { db } from '../../../../Shared/Firebaseconfig';
 import { collection, getDocs } from "firebase/firestore";
 
 // Register ChartJS components
@@ -34,17 +34,28 @@ export default function DashboardPage() {
   const [timeRange, setTimeRange] = useState('7d'); // 7d, 30d, 90d
   const [isLoading, setIsLoading] = useState(true);
   const [contacts, setContacts] = useState([]);
+  const [vehicles, setVehicles] = useState([]);
 
-  // Fetch contacts data
+  // Fetch data
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "contacts"));
+        // Fetch contacts
+        const contactsSnapshot = await getDocs(collection(db, "contacts"));
         const contactsData = [];
-        querySnapshot.forEach((doc) => {
+        contactsSnapshot.forEach((doc) => {
           contactsData.push({ id: doc.id, ...doc.data() });
         });
         setContacts(contactsData);
+
+        // Fetch vehicles
+        const vehiclesSnapshot = await getDocs(collection(db, "vehicles"));
+        const vehiclesData = [];
+        vehiclesSnapshot.forEach((doc) => {
+          vehiclesData.push({ id: doc.id, ...doc.data() });
+        });
+        setVehicles(vehiclesData);
+
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data: ", error);
@@ -55,11 +66,27 @@ export default function DashboardPage() {
     fetchData();
   }, []);
 
-  // Calculate contact statistics
+  // Calculate statistics
   const totalContacts = contacts.length;
   const contactedCount = contacts.filter(c => c.contacted).length;
   const pendingCount = totalContacts - contactedCount;
   const contactRate = totalContacts > 0 ? Math.round((contactedCount / totalContacts) * 100) : 0;
+
+  const totalVehicles = vehicles.length;
+  const availableVehicles = vehicles.filter(v => v.status === 'available').length;
+  const reservedVehicles = vehicles.filter(v => v.status === 'reserved').length;
+  const soldVehicles = vehicles.filter(v => v.status === 'sold').length;
+  const popularBrands = getPopularBrands(vehicles);
+
+  function getPopularBrands(vehicles) {
+    const brandCounts = {};
+    vehicles.forEach(vehicle => {
+      brandCounts[vehicle.make] = (brandCounts[vehicle.make] || 0) + 1;
+    });
+    return Object.entries(brandCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5);
+  }
 
   // Sample data
   const pageViewsData = {
@@ -80,16 +107,14 @@ export default function DashboardPage() {
     ]
   };
 
-  const trafficSourcesData = {
-    labels: ['Direct', 'Social', 'Search', 'Referral', 'Email'],
+  const vehicleStatusData = {
+    labels: ['Available', 'Reserved', 'Sold'],
     datasets: [
       {
-        data: [35, 25, 20, 15, 5],
+        data: [availableVehicles, reservedVehicles, soldVehicles],
         backgroundColor: [
-          'rgba(59, 130, 246, 0.7)',
           'rgba(16, 185, 129, 0.7)',
           'rgba(245, 158, 11, 0.7)',
-          'rgba(139, 92, 246, 0.7)',
           'rgba(239, 68, 68, 0.7)'
         ],
         borderWidth: 1,
@@ -111,16 +136,15 @@ export default function DashboardPage() {
     ]
   };
 
-  const userActivityData = {
-    labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
+  const popularBrandsData = {
+    labels: popularBrands.map(brand => brand[0]),
     datasets: [
       {
-        label: 'Active Users',
-        data: Array.from({ length: 24 }, () => Math.floor(Math.random() * 1000)),
+        label: 'Count',
+        data: popularBrands.map(brand => brand[1]),
+        backgroundColor: 'rgba(139, 92, 246, 0.7)',
         borderColor: 'rgba(139, 92, 246, 1)',
-        backgroundColor: 'rgba(139, 92, 246, 0.1)',
-        fill: true,
-        tension: 0.4,
+        borderWidth: 2,
       }
     ]
   };
@@ -128,8 +152,8 @@ export default function DashboardPage() {
   const stats = [
     { name: 'Total Visitors', value: '12,345', change: '+12%', trend: 'up' },
     { name: 'Avg. Session', value: '2m 45s', change: '+3%', trend: 'up' },
-    { name: 'Bounce Rate', value: '42%', change: '-5%', trend: 'down' },
-    { name: 'Conversions', value: '87', change: '+24%', trend: 'up' },
+    { name: 'Total Vehicles', value: totalVehicles, change: '', trend: '' },
+    { name: 'Available Vehicles', value: availableVehicles, change: '', trend: '' },
     { name: 'Total Contacts', value: totalContacts, change: '', trend: '' },
     { name: 'Contact Rate', value: `${contactRate}%`, change: '', trend: '' },
   ];
@@ -138,7 +162,7 @@ export default function DashboardPage() {
     <ProtectedRoute>
       <div className="p-6 space-y-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-gray-900">Website Analytics</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Dealership Analytics Dashboard</h1>
           <div className="flex space-x-2">
             <button
               onClick={() => setTimeRange('7d')}
@@ -192,7 +216,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Main Charts */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="bg-white p-6 rounded-xl shadow-sm">
                 <h2 className="text-xl font-semibold mb-4">Page Views</h2>
                 <div className="h-80">
@@ -210,10 +234,10 @@ export default function DashboardPage() {
               </div>
 
               <div className="bg-white p-6 rounded-xl shadow-sm">
-                <h2 className="text-xl font-semibold mb-4">Traffic Sources</h2>
+                <h2 className="text-xl font-semibold mb-4">Vehicle Status</h2>
                 <div className="h-80">
                   <Pie
-                    data={trafficSourcesData}
+                    data={vehicleStatusData}
                     options={{
                       responsive: true,
                       maintainAspectRatio: false,
@@ -224,10 +248,7 @@ export default function DashboardPage() {
                   />
                 </div>
               </div>
-            </div>
 
-            {/* Secondary Charts */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="bg-white p-6 rounded-xl shadow-sm">
                 <h2 className="text-xl font-semibold mb-4">Contact Status</h2>
                 <div className="h-80">
@@ -243,25 +264,57 @@ export default function DashboardPage() {
                   />
                 </div>
               </div>
+            </div>
 
+            {/* Secondary Charts */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="bg-white p-6 rounded-xl shadow-sm">
-                <h2 className="text-xl font-semibold mb-4">User Activity (24h)</h2>
+                <h2 className="text-xl font-semibold mb-4">Popular Vehicle Brands</h2>
                 <div className="h-80">
-                  <Line
-                    data={userActivityData}
+                  <Bar
+                    data={popularBrandsData}
                     options={{
                       responsive: true,
                       maintainAspectRatio: false,
                       plugins: {
-                        legend: { position: 'top' },
+                        legend: { display: false },
                       },
-                      scales: {
-                        y: {
-                          beginAtZero: true
-                        }
-                      }
                     }}
                   />
+                </div>
+              </div>
+
+              <div className="bg-white p-6 rounded-xl shadow-sm">
+                <h2 className="text-xl font-semibold mb-4">Recent Vehicle Additions</h2>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead>
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Make</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Model</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {vehicles.slice(0, 5).map((vehicle) => (
+                        <tr key={vehicle.id}>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{vehicle.make}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{vehicle.model}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${vehicle.price?.toLocaleString()}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm">
+                            <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                              vehicle.status === 'available' ? 'bg-green-100 text-green-800' :
+                              vehicle.status === 'reserved' ? 'bg-yellow-100 text-yellow-800' :
+                              'bg-red-100 text-red-800'
+                            }`}>
+                              {vehicle.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
