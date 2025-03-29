@@ -4,7 +4,7 @@
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { app } from '../../../Shared/Firebaseconfig';
+import { app } from '../../Shared/Firebaseconfig';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import Sidebar from './Sidebar';
 import Header from '@/components/Headeradmin';
