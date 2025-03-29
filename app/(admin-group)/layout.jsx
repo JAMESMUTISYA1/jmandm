@@ -25,29 +25,26 @@ export default function AdminLayout({ children }) {
   return (
     <ProtectedRoute>
       <html lang="en" className="h-full">
-        <body className="h-full">
-        <main >
-        <Header />
-          <div className="flex w-full h-screen bg-gray-100">
-            <div className="w-64" > {!isAdminDashboard && <Sidebar isLoggedIn={isLoggedIn} />}</div>
-           
+        <body className="h-full flex flex-col">
+          <Header />
+          <div className="flex flex-1 overflow-hidden">
+            {!isAdminDashboard && (
+              <div className="w-64 h-full bg-white border-r border-gray-200">
+                <Sidebar isLoggedIn={isLoggedIn} />
+              </div>
+            )}
             {/* Main content area */}
-            <div >
-             
-              
-             
+            <div className="flex-1 flex flex-col overflow-hidden">
+              <main className="flex-1 overflow-y-auto p-6 bg-gray-100">
                 {children}
-             
-              
-             
-            </div>
-          </div>
-          <footer className="bg-gray-800 py-4 px-6">
+              </main>
+              <footer className="bg-gray-800 py-4 px-6">
                 <p className="text-sm text-white text-center">
                   © {new Date().getFullYear()} Developed by JMandM tech James Mutisya
                 </p>
               </footer>
-         </main>
+            </div>
+          </div>
         </body>
       </html>
     </ProtectedRoute>
