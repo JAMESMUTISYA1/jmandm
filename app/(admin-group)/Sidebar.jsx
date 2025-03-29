@@ -54,7 +54,7 @@ export default function Sidebar() {
   if (!isLoggedIn) return null;
 
   return (
-    <div className="w-64 h-screen bg-gray-800 text-white fixed left-0 top-0 flex flex-col z-50">
+    <div className="w-64 h-screen bg-gray-800 text-white fixed left-0 top-6 flex flex-col z-50">
       {/* Header */}
       <div className="p-4 border-b border-gray-700 flex items-center justify-between">
         <h1 className="text-xl font-bold">Admin Panel</h1>

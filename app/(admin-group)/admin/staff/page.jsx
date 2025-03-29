@@ -77,7 +77,7 @@ export default function StaffManagement() {
       
       // Upload new image if selected
       if (imageFile) {
-        imageUrl = await uploadImage();
+        imageUrl = "/v1/1.jpeg";//await uploadImage();
         if (!imageUrl) return;
       }
 
@@ -146,7 +146,7 @@ export default function StaffManagement() {
   };
 
   return (
-    <div className="bg-white mt-10 rounded-lg shadow p-6">
+    <div className="bg-white mt-15 rounded-lg shadow p-6">
       <ToastContainer position="top-right" autoClose={3000} />
       
       <div className="flex justify-between items-center mb-6">
