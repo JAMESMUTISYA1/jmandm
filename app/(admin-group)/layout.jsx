@@ -1,4 +1,4 @@
-import Sidebar from './admin/Sidebar';
+import Sidebar from './Sidebar';
 import Header from '@/components/Headeradmin';
 import ProtectedRoute from '@/components/ProtectedRoute';
 
