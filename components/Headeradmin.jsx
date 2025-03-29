@@ -15,7 +15,7 @@ export default function Header({ showMenu = true, showLogout = false }) {
               <img
                 src="/Logo.png" // Replace with your logo path
                 alt="Logo"
-                className="h-15 w-15 m-0"
+                className="h-15 w-15 "
               />
               <span className="ml-2 text-xl text-black font-semibold">JM and M</span>
         
