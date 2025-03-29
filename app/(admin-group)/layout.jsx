@@ -27,7 +27,7 @@ export default function AdminLayout({ children }) {
       <html lang="en" className="h-full">
         <body className="h-full flex flex-col">
           <Header />
-          <div className="flex flex-1 overflow-hidden">
+          <div className="flex flex-1">
             {!isAdminDashboard && (
               <div className="w-64 h-full bg-gray-200 border-r border-gray-400">
                 <Sidebar isLoggedIn={isLoggedIn} />
