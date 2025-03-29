@@ -26,7 +26,8 @@ export default function AdminLayout({ children }) {
     <ProtectedRoute>
       <html lang="en" className="h-full">
         <body className="h-full">
-        <Header showMenu={!isAdminDashboard} showLogout={isLoggedIn} />
+        <main >
+        <Header />
           <div className="flex w-full h-screen bg-gray-100">
             <div className="w-64" > {!isAdminDashboard && <Sidebar isLoggedIn={isLoggedIn} />}</div>
            
@@ -34,9 +35,9 @@ export default function AdminLayout({ children }) {
             <div >
              
               
-              <main >
+             
                 {children}
-              </main>
+             
               
              
             </div>
@@ -46,6 +47,7 @@ export default function AdminLayout({ children }) {
                   © {new Date().getFullYear()} Developed by JMandM tech James Mutisya
                 </p>
               </footer>
+         </main>
         </body>
       </html>
     </ProtectedRoute>

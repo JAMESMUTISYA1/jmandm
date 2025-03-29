@@ -28,9 +28,9 @@ export default function Sidebar({ isLoggedIn }) {
   ];
 
   return (
-    <div className="hidden lg:block w-64  bg-gray-800 text-white fixed">
+    <div className="hidden  w-64  bg-gray-800 text-white">
       <div className="p-4 border-b border-gray-700">
-        <h1 className="text-xl font-bold">Admin Panel</h1>
+        <h1 className="text-xl font-bold">Welcome Admin </h1>
       </div>
       <nav className="p-4">
         <ul className="space-y-2">
