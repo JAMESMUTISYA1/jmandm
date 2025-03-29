@@ -5,7 +5,7 @@ export default function Header({ showMenu = true, showLogout = false }) {
  
   return (
     <header className="bg-indigo-600 w-full   shadow-sm fixed">
-      <div className="flex items-center justify-between p-1">
+      <div className="flex items-center justify-between py-5">
 
       <div className="g-6" > {showMenu && (
           <button className="lg:hidden">
