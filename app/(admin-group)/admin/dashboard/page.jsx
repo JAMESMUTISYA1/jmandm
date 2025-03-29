@@ -14,6 +14,8 @@ import {
   Legend
 } from 'chart.js';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import { db } from '../../Shared/Firebaseconfig';
+import { collection, getDocs } from "firebase/firestore";
 
 // Register ChartJS components
 ChartJS.register(
@@ -31,12 +33,33 @@ ChartJS.register(
 export default function DashboardPage() {
   const [timeRange, setTimeRange] = useState('7d'); // 7d, 30d, 90d
   const [isLoading, setIsLoading] = useState(true);
+  const [contacts, setContacts] = useState([]);
 
-  // Mock data - replace with real API calls
+  // Fetch contacts data
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1000);
-    return () => clearTimeout(timer);
+    const fetchData = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "contacts"));
+        const contactsData = [];
+        querySnapshot.forEach((doc) => {
+          contactsData.push({ id: doc.id, ...doc.data() });
+        });
+        setContacts(contactsData);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
+
+  // Calculate contact statistics
+  const totalContacts = contacts.length;
+  const contactedCount = contacts.filter(c => c.contacted).length;
+  const pendingCount = totalContacts - contactedCount;
+  const contactRate = totalContacts > 0 ? Math.round((contactedCount / totalContacts) * 100) : 0;
 
   // Sample data
   const pageViewsData = {
@@ -74,15 +97,16 @@ export default function DashboardPage() {
     ]
   };
 
-  const popularPagesData = {
-    labels: ['Home', 'Vehicles', 'About', 'Contact', 'Blog'],
+  const contactStatusData = {
+    labels: ['Contacted', 'Pending'],
     datasets: [
       {
-        label: 'Visits',
-        data: [1200, 800, 400, 300, 200],
-        backgroundColor: 'rgba(16, 185, 129, 0.7)',
-        borderColor: 'rgba(16, 185, 129, 1)',
-        borderWidth: 2,
+        data: [contactedCount, pendingCount],
+        backgroundColor: [
+          'rgba(16, 185, 129, 0.7)',
+          'rgba(245, 158, 11, 0.7)'
+        ],
+        borderWidth: 1,
       }
     ]
   };
@@ -106,6 +130,8 @@ export default function DashboardPage() {
     { name: 'Avg. Session', value: '2m 45s', change: '+3%', trend: 'up' },
     { name: 'Bounce Rate', value: '42%', change: '-5%', trend: 'down' },
     { name: 'Conversions', value: '87', change: '+24%', trend: 'up' },
+    { name: 'Total Contacts', value: totalContacts, change: '', trend: '' },
+    { name: 'Contact Rate', value: `${contactRate}%`, change: '', trend: '' },
   ];
 
   return (
@@ -142,23 +168,25 @@ export default function DashboardPage() {
         ) : (
           <>
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
               {stats.map((stat, index) => (
                 <div key={index} className="bg-white p-6 rounded-xl shadow-sm">
                   <div className="text-gray-500 text-sm">{stat.name}</div>
                   <div className="mt-2 text-3xl font-bold">{stat.value}</div>
-                  <div className={`mt-2 flex items-center text-sm ${stat.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
-                    {stat.change}
-                    {stat.trend === 'up' ? (
-                      <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                      </svg>
-                    ) : (
-                      <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    )}
-                  </div>
+                  {stat.change && (
+                    <div className={`mt-2 flex items-center text-sm ${stat.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
+                      {stat.change}
+                      {stat.trend === 'up' ? (
+                        <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                        </svg>
+                      ) : (
+                        <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -201,15 +229,15 @@ export default function DashboardPage() {
             {/* Secondary Charts */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="bg-white p-6 rounded-xl shadow-sm">
-                <h2 className="text-xl font-semibold mb-4">Popular Pages</h2>
+                <h2 className="text-xl font-semibold mb-4">Contact Status</h2>
                 <div className="h-80">
-                  <Bar
-                    data={popularPagesData}
+                  <Pie
+                    data={contactStatusData}
                     options={{
                       responsive: true,
                       maintainAspectRatio: false,
                       plugins: {
-                        legend: { display: false },
+                        legend: { position: 'right' },
                       },
                     }}
                   />
@@ -238,38 +266,74 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            {/* Recent Activity Table */}
-            <div className="bg-white p-6 rounded-xl shadow-sm">
-              <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead>
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Page</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Visitor</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {[
-                      { page: '/vehicles/123', visitor: 'User from Kenya', duration: '2:45', time: '2 mins ago' },
-                      { page: '/contact', visitor: 'User from UK', duration: '1:30', time: '5 mins ago' },
-                      { page: '/blog/post-1', visitor: 'Returning User', duration: '4:15', time: '12 mins ago' },
-                      { page: '/', visitor: 'New User', duration: '0:45', time: '18 mins ago' },
-                      { page: '/about', visitor: 'User from US', duration: '3:20', time: '25 mins ago' },
-                    ].map((activity, index) => (
-                      <tr key={index}>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-600 hover:underline cursor-pointer">
-                          {activity.page}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{activity.visitor}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{activity.duration}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{activity.time}</td>
+            {/* Recent Activity Tables */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="bg-white p-6 rounded-xl shadow-sm">
+                <h2 className="text-xl font-semibold mb-4">Recent Contacts</h2>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead>
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {contacts.slice(0, 5).map((contact) => (
+                        <tr key={contact.id}>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{contact.name}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm">
+                            {contact.contacted ? (
+                              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                Contacted
+                              </span>
+                            ) : (
+                              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                Pending
+                              </span>
+                            )}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {new Date(contact.createdAt?.seconds * 1000 || contact.createdAt).toLocaleDateString()}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div className="bg-white p-6 rounded-xl shadow-sm">
+                <h2 className="text-xl font-semibold mb-4">Recent Website Activity</h2>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead>
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Page</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Visitor</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {[
+                        { page: '/vehicles/123', visitor: 'User from Kenya', time: '2 mins ago' },
+                        { page: '/contact', visitor: 'User from UK', time: '5 mins ago' },
+                        { page: '/blog/post-1', visitor: 'Returning User', time: '12 mins ago' },
+                        { page: '/', visitor: 'New User', time: '18 mins ago' },
+                        { page: '/about', visitor: 'User from US', time: '25 mins ago' },
+                      ].map((activity, index) => (
+                        <tr key={index}>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-600 hover:underline cursor-pointer">
+                            {activity.page}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{activity.visitor}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{activity.time}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </>

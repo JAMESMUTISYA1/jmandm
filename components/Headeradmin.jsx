@@ -4,7 +4,7 @@
 export default function Header({ showMenu = true, }) {
  
   return (
-    <header className="bg-indigo-600 w-full   shadow-sm fixed">
+    <header className="bg-indigo-600 w-full h-20   shadow-sm fixed">
       <div className="flex items-center justify-between p-1">
 
       <div className="g-6" > {showMenu && (
