@@ -23,11 +23,11 @@ export default function Sidebar({ isLoggedIn }) {
 
   const navItems = [
     { name: 'Dashboard', href: '/admin', icon: <FiHome /> },
+    { name: 'Staff', href: '/admin/staff', icon: <FiUsers /> },
     { name: 'Vehicles', href: '/admin/vehicles', icon: <FiTruck /> },
-    { name: 'Vehicles', href: '/admin/vehicles', icon: <FiTruck /> },
-    { name: 'Vehicles', href: '/admin/vehicles', icon: <FiTruck /> },
-    { name: 'Vehicles', href: '/admin/vehicles', icon: <FiTruck /> },
-    { name: 'Vehicles', href: '/admin/vehicles', icon: <FiTruck /> },
+    { name: 'Analytics', href: '/admin/analytics', icon: <FiPieChart /> },
+    { name: 'Contacts', href: '/admin/contacts', icon: <FiFileText /> },
+    { name: 'Settings', href: '/admin/settings', icon: <FiSettings /> },
     // ... other nav items
   ];
 
