@@ -2,7 +2,7 @@
 'use client';
 
 import { getAuth, signOut } from 'firebase/auth';
-import { app } from '@/lib/firebase';
+import { app } from '../Shared/Firebaseconfig';
 import { useRouter } from 'next/navigation';
 
 export default function Header({ showMenu = true, showLogout = false }) {
