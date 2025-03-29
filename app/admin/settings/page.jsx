@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react';
 import { getAuth, reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { auth } from '../../../Shared/Firebaseconfig';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
