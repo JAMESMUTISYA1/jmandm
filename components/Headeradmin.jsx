@@ -1,41 +1,40 @@
+// components/Headeradmin.jsx
 'use client';
-import { useRouter } from 'next/navigation';
-import { getAuth, signOut } from 'firebase/auth';
-import { app } from '../Shared/Firebaseconfig';
 
-export default function Header({ onMenuClick }) {
+import { getAuth, signOut } from 'firebase/auth';
+import { app } from '@/lib/firebase';
+import { useRouter } from 'next/navigation';
+
+export default function Header({ showMenu = true, showLogout = false }) {
   const router = useRouter();
-  const auth = getAuth(app);
 
   const handleLogout = async () => {
     try {
+      const auth = getAuth(app);
       await signOut(auth);
-      router.push('/admin');
+      router.push('/login');
     } catch (error) {
       console.error('Logout error:', error);
     }
   };
 
   return (
-    <header className="bg-white shadow-sm">
+    <header className="bg-indigo-600 shadow-sm">
       <div className="flex items-center justify-between p-4">
-        <button 
-          onClick={onMenuClick}
-          className="lg:hidden text-gray-500 hover:text-gray-600"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-
-        <div className="flex items-center space-x-4">
+        {showMenu && (
+          <button className="lg:hidden">
+            {/* Your menu icon */}
+          </button>
+        )}
+        <div className="flex-1"></div>
+        {showLogout && (
           <button 
             onClick={handleLogout}
-            className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 text-sm"
+            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
           >
             Logout
           </button>
-        </div>
+        )}
       </div>
     </header>
   );
