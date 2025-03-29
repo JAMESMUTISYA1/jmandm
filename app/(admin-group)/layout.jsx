@@ -10,17 +10,7 @@ import Sidebar from './Sidebar';
 import Header from '@/components/Headeradmin';
 
 export default function AdminLayout({ children }) {
-  const pathname = usePathname();
-  const isAdminDashboard = pathname === '/admin';
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const auth = getAuth(app);
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setIsLoggedIn(!!user);
-    });
-    return () => unsubscribe();
-  }, []);
+  
 
   return (
     <ProtectedRoute>
@@ -28,11 +18,11 @@ export default function AdminLayout({ children }) {
         <body className="h-full flex flex-col">
           <Header />
           <div className="flex flex-1">
-            {!isAdminDashboard && (
+          
               <div className="w-64 h-full bg-gray-200 border-r border-gray-400">
-                <Sidebar isLoggedIn={isLoggedIn} />
+                <Sidebar />
               </div>
-            )}
+            
             {/* Main content area */}
             <div className="flex-1 flex flex-col overflow-hidden">
               <main className="flex-1 overflow-y-auto p-6 bg-gray-100">
