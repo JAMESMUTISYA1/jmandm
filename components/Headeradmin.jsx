@@ -1,13 +1,17 @@
 // components/Headeradmin.jsx
 'use client';
 
-export default function Header({ showMenu = true, showLogout = false }) {
+export default function Header({ showMenu = true, }) {
  
   return (
-    <header className="bg-indigo-600 w-full h-17   shadow-sm fixed">
-      <div className="flex items-center justify-between py-5">
+    <header className="bg-indigo-600 w-full   shadow-sm fixed">
+      <div className="flex items-center justify-between p-1">
 
-      <div className="g-6" > 
+      <div className="g-6" > {showMenu && (
+          <button className="lg:hidden">
+            {/* Your menu icon */}
+          </button>
+        )}
         <p>ADMIN</p></div>
        
          <div className="flex items-center">
@@ -15,7 +19,7 @@ export default function Header({ showMenu = true, showLogout = false }) {
               <img
                 src="/Logo.png" // Replace with your logo path
                 alt="Logo"
-                className="h-15 w-15 "
+                className="h-20 w-20"
               />
               <span className="ml-2 text-xl text-black font-semibold">JM and M</span>
         
