@@ -26,6 +26,16 @@ export default function Header({ showMenu = true, showLogout = false }) {
             {/* Your menu icon */}
           </button>
         )}
+         <div className="flex items-center">
+           
+              <img
+                src="/Logo.png" // Replace with your logo path
+                alt="Logo"
+                className="h-20 w-20"
+              />
+              <span className="ml-2 text-xl text-black font-semibold">JM and M</span>
+        
+          </div>
         <div className="flex-1"></div>
         {showLogout && (
           <button 
