@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { collection, getDocs, doc, deleteDoc } from 'firebase/firestore';
-import { db } from '../../../Shared/Firebaseconfig';
+import { db } from '../../../../Shared/Firebaseconfig';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
