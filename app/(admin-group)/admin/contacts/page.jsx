@@ -1,9 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
-import { db } from '../../../../../Shared/Firebaseconfig';
+import { db } from '../../../../Shared/Firebaseconfig';
 import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 
 export default function UsersPage() {
   const [contacts, setContacts] = useState([]);

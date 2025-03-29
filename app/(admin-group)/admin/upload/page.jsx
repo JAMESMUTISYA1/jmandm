@@ -1,9 +1,9 @@
 "use client";
 import { useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../../../../../Shared/Firebaseconfig';
+import { db } from '../../../../Shared/Firebaseconfig';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../../../../../Shared/Firebaseconfig';
+import { storage } from '../../../../Shared/Firebaseconfig';
 
 const AdminUploadPage = () => {
   const [vehicleData, setVehicleData] = useState({
