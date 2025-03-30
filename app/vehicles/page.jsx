@@ -348,41 +348,39 @@ const CarListingPage = () => {
                       <div
                         key={`${car.id}-${index}`}
                         ref={index === filteredCars.length - 1 ? lastCarElementRef : null}
-                        className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+                        className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 group"
                       >
-                        <div className="relative" style={{ width: '400px', height: '300px', overflow: 'hidden' }}>
+                        {/* Image Container with Fixed Height */}
+                        <div className="relative h-48 w-full flex items-center justify-center bg-white p-4">
                           <LazyLoadImage
                             src={car.images[0] || '/Logo.png'}
                             alt={`${car.brand} ${car.model}`}
                             effect="blur"
-                            className="w-full h-full"
-                            style={{ 
-                              objectFit: 'contain',
-                              width: '400px',
-                              height: '300px',
-                              padding: '10px',
-                              backgroundColor: '#f3f4f6'
-                            }}
-                            width={400}
-                            height={300}
+                            className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
+                            width={320}
+                            height={180}
                             placeholderSrc="/Logo.png"
                           />
                         </div>
+                        
+                        {/* Car Details */}
                         <div className="p-4">
-                          <h2 className="text-xl font-bold mb-2">{car.name}</h2>
-                          <div className="flex justify-between">
-                            <p className="text-gray-600">{car.brand}</p>
-                            <span className="text-lg font-bold">Ksh {car.price.toLocaleString()}</span>
+                          <h2 className="text-xl font-bold mb-2 truncate">{car.name}</h2>
+                          <div className="flex justify-between items-center mb-3">
+                            <span className="text-gray-600 text-sm">{car.year} • {car.mileage?.toLocaleString()} km</span>
+                            <span className="text-lg font-bold text-blue-600">Ksh {car.price.toLocaleString()}</span>
                           </div>
-                          <div className="flex justify-between gap-2 mt-3">
+                          
+                          {/* Social Links */}
+                          <div className="flex justify-between gap-2">
                             {car.tiktokLink && (
                               <a
                                 href={car.tiktokLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-2 px-1 bg-black text-red-800 rounded-lg hover:text-white hover:bg-green-700"
+                                className="flex-1 py-1 px-2 bg-black text-red-600 rounded hover:bg-gray-900 text-center text-sm"
                               >
-                                Tiktok Review
+                                TikTok
                               </a>
                             )}
                             {car.youtubeLink && (
@@ -390,21 +388,20 @@ const CarListingPage = () => {
                                 href={car.youtubeLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-1 bg-red-600 text-white rounded-lg hover:bg-green-700"
+                                className="flex-1 py-1 px-2 bg-red-600 text-white rounded hover:bg-red-700 text-center text-sm"
                               >
-                                Youtube Review
+                                YouTube
                               </a>
                             )}
                           </div>
-                          <div className="flex justify-end mt-4">
-                            <Link
-                              href={`/vehicles/${car.id}`}
-                              className="p-2 bg-blue-600 text-white rounded-lg hover:bg-green-700"
-                              aria-label={`View details of ${car.name}`}
-                            >
-                              More details &gt;
-                            </Link>
-                          </div>
+                          
+                          {/* View Details Button */}
+                          <Link
+                            href={`/vehicles/${car.id}`}
+                            className="mt-3 block w-full py-2 bg-blue-600 hover:bg-blue-700 text-white text-center rounded transition-colors"
+                          >
+                            View Details
+                          </Link>
                         </div>
                       </div>
                     ))}

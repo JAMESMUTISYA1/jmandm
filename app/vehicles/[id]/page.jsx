@@ -59,7 +59,7 @@ const VehicleDetailsPage = () => {
         collection(db, 'vehicles'),
         where('bodyType', '==', vehicle.bodyType),
         where('id', '!=', vehicle.id), // Exclude current vehicle
-        limit(5) // Limit to 5 similar vehicles
+        limit(3) // Limit to 5 similar vehicles
       );
 
       const similarSnapshot = await getDocs(similarQuery);
