@@ -77,7 +77,7 @@ export default function StaffManagement() {
       
       // Upload new image if selected
       if (imageFile) {
-        imageUrl = "/v1/1.jpeg";//await uploadImage();
+        imageUrl = "/jm.jpeg";//await uploadImage();
         if (!imageUrl) return;
       }
 

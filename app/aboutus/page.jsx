@@ -173,7 +173,7 @@ const AboutPage = () => {
               {teamMembers.map((member) => (
                 <div key={member.id} className="text-center pb-5 w-70 bg-gray-300">
                   <Image
-                    src={member.image}
+                    src={member.imageUrl}
                     alt={member.name}
                     width={200}
                     height={200}
