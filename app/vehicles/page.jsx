@@ -342,7 +342,7 @@ const CarListingPage = () => {
                 </div>
               ) : filteredCars.length > 0 ? (
                 <>
-                  <h1 className="text-2xl font-bold mb-6">Available Vehicles ({filteredCars.length})</h1>
+                  <h1 className="text-2xl text-black font-bold mb-6">Available Vehicles ({filteredCars.length})</h1>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filteredCars.map((car, index) => (
                       <div
@@ -357,15 +357,15 @@ const CarListingPage = () => {
                             alt={`${car.brand} ${car.model}`}
                             effect="blur"
                             className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
-                            width={320}
-                            height={180}
+                            width={420}
+                            height={280}
                             placeholderSrc="/Logo.png"
                           />
                         </div>
                         
                         {/* Car Details */}
                         <div className="p-4">
-                          <h2 className="text-xl font-bold mb-2 truncate">{car.name}</h2>
+                          <h2 className="text-xl font-bold mb-2 text-black  truncate">{car.name}</h2>
                           <div className="flex justify-between items-center mb-3">
                             <span className="text-gray-600 text-sm">{car.year} • {car.mileage?.toLocaleString()} km</span>
                             <span className="text-lg font-bold text-blue-600">Ksh {car.price.toLocaleString()}</span>
