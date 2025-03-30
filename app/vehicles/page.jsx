@@ -350,12 +350,19 @@ const CarListingPage = () => {
                         ref={index === filteredCars.length - 1 ? lastCarElementRef : null}
                         className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
                       >
-                        <div className="aspect-w-16 aspect-h-9">
+                        <div className="relative" style={{ width: '100%', height: '200px', overflow: 'hidden' }}>
                           <LazyLoadImage
                             src={car.images[0] || '/placeholder-car.jpg'}
                             alt={`${car.brand} ${car.model}`}
                             effect="blur"
-                            className="w-full h-48 object-cover"
+                            className="w-full h-full"
+                            style={{ 
+                              objectFit: 'contain',
+                              width: '100%',
+                              height: '100%',
+                              padding: '10px',
+                              backgroundColor: '#f3f4f6'
+                            }}
                             width={400}
                             height={300}
                             placeholderSrc="/placeholder-car.jpg"

@@ -55,22 +55,16 @@ const VehicleDetailsPage = () => {
 
   const fetchSimilarVehicles = async (vehicle) => {
     try {
-      const minPrice = vehicle.price - 2000000;
-      const maxPrice = vehicle.price + 2000000;
-  
       const similarQuery = query(
         collection(db, 'vehicles'),
-        where('price', '>=', minPrice),
-        where('price', '<=', maxPrice),
         where('bodyType', '==', vehicle.bodyType),
-        limit(5)
+        where('id', '!=', vehicle.id), // Exclude current vehicle
+        limit(5) // Limit to 5 similar vehicles
       );
-  
+
       const similarSnapshot = await getDocs(similarQuery);
-      const similarData = similarSnapshot.docs
-        .filter(doc => doc.id !== vehicle.id)
-        .map(doc => ({ id: doc.id, ...doc.data() }));
-  
+      const similarData = similarSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
       setSimilarVehicles(similarData);
     } catch (error) {
       console.error('Error fetching similar vehicles:', error);
@@ -286,7 +280,7 @@ const VehicleDetailsPage = () => {
 
           {/* Similar Vehicles Section */}
           <div className="mt-12">
-            <h3 className="text-2xl font-bold mb-6">Similar Vehicles</h3>
+            <h3 className="text-2xl font-bold mb-6">Similar Vehicles (Same Body Type: {vehicle.bodyType})</h3>
             {similarVehicles.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {similarVehicles.map((v) => (
@@ -300,6 +294,10 @@ const VehicleDetailsPage = () => {
                     />
                     <div className="p-4">
                       <h4 className="text-xl font-bold">{v.name}</h4>
+                      <div className="mt-2">
+                        <p className="text-gray-600">{v.year} • {v.mileage?.toLocaleString()} km</p>
+                        <p className="text-gray-600">{v.fuelType} • {v.transmission}</p>
+                      </div>
                       <div className="flex justify-between items-center mt-4">
                         <span className="text-lg font-bold text-blue-600">
                           KES {v.price.toLocaleString()}
@@ -317,7 +315,7 @@ const VehicleDetailsPage = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-600 text-center py-8">No similar vehicles found.</p>
+              <p className="text-gray-600 text-center py-8">No similar vehicles found with the same body type.</p>
             )}
           </div>
         </div>
