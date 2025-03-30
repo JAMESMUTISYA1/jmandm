@@ -357,8 +357,8 @@ const CarListingPage = () => {
                             alt={`${car.brand} ${car.model}`}
                             effect="blur"
                             className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
-                            width={420}
-                            height={280}
+                            width={320}
+                            height={180}
                             placeholderSrc="/Logo.png"
                           />
                         </div>

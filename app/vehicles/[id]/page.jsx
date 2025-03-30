@@ -178,7 +178,7 @@ const VehicleDetailsPage = () => {
                       alt={`Thumbnail ${index + 1}`}
                       className="w-full h-full object-cover"
                       effect="blur"
-                      placeholderSrc="/placeholder-car.jpg"
+                      placeholderSrc="/Logo.png"
                     />
                   </button>
                 ))}
@@ -280,7 +280,7 @@ const VehicleDetailsPage = () => {
 
           {/* Similar Vehicles Section */}
           <div className="mt-12">
-            <h3 className="text-2xl font-bold mb-6">Similar Vehicles (Same Body Type: {vehicle.bodyType})</h3>
+            <h3 className="text-2xl font-bold mb-6">Similar Vehicles</h3>
             {similarVehicles.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {similarVehicles.map((v) => (
@@ -290,7 +290,7 @@ const VehicleDetailsPage = () => {
                       alt={v.name}
                       className="w-full h-48 object-cover rounded-lg"
                       effect="blur"
-                      placeholderSrc="/placeholder-car.jpg"
+                      placeholderSrc="/Logo.png"
                     />
                     <div className="p-4">
                       <h4 className="text-xl font-bold">{v.name}</h4>
