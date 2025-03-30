@@ -90,17 +90,17 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow p-6 max-w-2xl mx-auto">
+    <div className="bg-white rounded-lg shadow text-black p-6 max-w-2xl mx-auto">
       <ToastContainer position="top-center" autoClose={3000} />
-      <h1 className="text-2xl font-bold mb-6">Account Settings</h1>
+      <h1 className="text-2xl text-black font-bold mb-6">Account Settings</h1>
       
       <div className="space-y-6">
         <div className="border-b border-gray-200 pb-6">
           <h2 className="text-lg font-medium text-gray-900 mb-4">Change Password</h2>
           
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4 text-black">
             <div>
-              <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="currentPassword" className="block text -sm font-medium text-gray-700 mb-1">
                 Current Password
               </label>
               <input
@@ -108,7 +108,7 @@ export default function SettingsPage() {
                 id="currentPassword"
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                className={`w-full px-3 py-2 border rounded-md ${errors.currentPassword ? 'border-red-500' : 'border-gray-300'}`}
+                className={`w-full text-black px-3 py-2 border rounded-md ${errors.currentPassword ? 'border-red-500' : 'border-gray-300'}`}
               />
               {errors.currentPassword && (
                 <p className="mt-1 text-sm text-red-600">{errors.currentPassword}</p>
@@ -124,7 +124,7 @@ export default function SettingsPage() {
                 id="newPassword"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className={`w-full px-3 py-2 border rounded-md ${errors.newPassword ? 'border-red-500' : 'border-gray-300'}`}
+                className={`w-full px-3 py-2 border text-black rounded-md ${errors.newPassword ? 'border-red-500' : 'border-gray-300'}`}
               />
               {errors.newPassword && (
                 <p className="mt-1 text-sm text-red-600">{errors.newPassword}</p>
@@ -135,7 +135,7 @@ export default function SettingsPage() {
             </div>
             
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="confirmPassword" className="text-black block text-sm font-medium text-gray-700 mb-1">
                 Confirm New Password
               </label>
               <input

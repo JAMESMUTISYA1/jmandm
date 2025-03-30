@@ -89,10 +89,10 @@ export default function UsersPage() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow p-6">
+    <div className="bg-white text-black rounded-lg shadow p-6">
       <ToastContainer />
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Contact Submissions</h1>
+      <div className="flex text-black justify-between items-center mb-6">
+        <h1 className="text-2xl text-black font-bold">Contact Submissions</h1>
         <button
           onClick={() => setIsAddModalOpen(true)}
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
@@ -109,7 +109,7 @@ export default function UsersPage() {
         <p className="text-gray-500">No contact submissions found</p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
+          <table className="min-w-full divide-y text-black divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
@@ -120,7 +120,7 @@ export default function UsersPage() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white divide-y text-black divide-gray-200">
               {contacts.map((contact) => (
                 <tr key={contact.id}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{contact.name}</td>
@@ -159,11 +159,11 @@ export default function UsersPage() {
 
       {/* Add Contact Modal */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+        <div className="fixed inset-0 bg-black bg-opacity-50 text-black flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full text-black max-w-md">
             <h2 className="text-xl font-bold mb-4">Add New Contact</h2>
             <form onSubmit={handleAddContact}>
-              <div className="mb-4">
+              <div className="mb-4 text-black">
                 <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
                 <input
                   type="text"

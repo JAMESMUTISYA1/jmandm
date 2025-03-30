@@ -160,10 +160,10 @@ export default function DashboardPage() {
 
   return (
     <ProtectedRoute>
-      <div className="p-6 space-y-6">
+      <div className="p-6 space-y-6 text-black">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold text-gray-900">Dealership Analytics Dashboard</h1>
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 text-black">
             <button
               onClick={() => setTimeRange('7d')}
               className={`px-3 py-1 rounded-md ${timeRange === '7d' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
@@ -192,7 +192,7 @@ export default function DashboardPage() {
         ) : (
           <>
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
+            <div className="grid grid-cols-1 text-black md:grid-cols-2 lg:grid-cols-6 gap-6">
               {stats.map((stat, index) => (
                 <div key={index} className="bg-white p-6 rounded-xl shadow-sm">
                   <div className="text-gray-500 text-sm">{stat.name}</div>
@@ -216,7 +216,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Main Charts */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 text-black">
               <div className="bg-white p-6 rounded-xl shadow-sm">
                 <h2 className="text-xl font-semibold mb-4">Page Views</h2>
                 <div className="h-80">
@@ -233,7 +233,7 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="bg-white p-6 rounded-xl shadow-sm">
+              <div className="bg-white p-6 text-black rounded-xl shadow-sm">
                 <h2 className="text-xl font-semibold mb-4">Vehicle Status</h2>
                 <div className="h-80">
                   <Pie
@@ -249,7 +249,7 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="bg-white p-6 rounded-xl shadow-sm">
+              <div className="bg-white text-black p-6 rounded-xl shadow-sm">
                 <h2 className="text-xl font-semibold mb-4">Contact Status</h2>
                 <div className="h-80">
                   <Pie
@@ -267,7 +267,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Secondary Charts */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 text-black lg:grid-cols-2 gap-6">
               <div className="bg-white p-6 rounded-xl shadow-sm">
                 <h2 className="text-xl font-semibold mb-4">Popular Vehicle Brands</h2>
                 <div className="h-80">
@@ -284,10 +284,10 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="bg-white p-6 rounded-xl shadow-sm">
+              <div className="bg-white p-6 text-black rounded-xl shadow-sm">
                 <h2 className="text-xl font-semibold mb-4">Recent Vehicle Additions</h2>
                 <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
+                  <table className="min-w-full divide-y text-black divide-gray-200">
                     <thead>
                       <tr>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Make</th>
@@ -296,7 +296,7 @@ export default function DashboardPage() {
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                       </tr>
                     </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
+                    <tbody className="bg-white divide-y text-black divide-gray-200">
                       {vehicles.slice(0, 5).map((vehicle) => (
                         <tr key={vehicle.id}>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{vehicle.make}</td>
@@ -360,7 +360,7 @@ export default function DashboardPage() {
               <div className="bg-white p-6 rounded-xl shadow-sm">
                 <h2 className="text-xl font-semibold mb-4">Recent Website Activity</h2>
                 <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
+                  <table className="min-w-full text-black divide-y divide-gray-200">
                     <thead>
                       <tr>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Page</th>

@@ -65,7 +65,7 @@ export default function VehicleDetails({ params }) {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow overflow-hidden">
+    <div className="bg-white text-black rounded-lg shadow overflow-hidden">
       <ToastContainer position="top-right" autoClose={3000} />
       
       {/* Header with back button */}

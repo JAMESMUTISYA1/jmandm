@@ -146,10 +146,10 @@ export default function StaffManagement() {
   };
 
   return (
-    <div className="bg-white mt-15 rounded-lg shadow p-6">
+    <div className="bg-white mt-15 text-black rounded-lg shadow p-6">
       <ToastContainer position="top-right" autoClose={3000} />
       
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between text-black items-center mb-6">
         <h1 className="text-2xl text-black  font-bold">Staff Management</h1>
         <button
           onClick={openAddModal}
@@ -160,14 +160,14 @@ export default function StaffManagement() {
       </div>
 
       {loading ? (
-        <div className="flex justify-center items-center h-64">
+        <div className="flex justify-center  items-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
         </div>
       ) : staff.length === 0 ? (
         <p className="text-gray-500">No staff members found</p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
+          <table className="min-w-full text-black divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
@@ -178,7 +178,7 @@ export default function StaffManagement() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white divide-y text-black divide-gray-200">
               {staff.map((staff) => (
                 <tr key={staff.id}>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -221,19 +221,19 @@ export default function StaffManagement() {
 
       {/* Add/Edit Staff Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 text-black flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md">
-            <h2 className="text-xl font-bold mb-4">
+            <h2 className="text-xl text-black font-bold mb-4">
               {currentStaff ? 'Edit Staff' : 'Add New Staff'}
             </h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Profile Image</label>
+                <label className="block text-sm text-black  font-medium text-gray-700 mb-1">Profile Image</label>
                 <input
                   type="file"
                   accept="image/*"
                   onChange={handleImageChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-3 text-black py-2 border border-gray-300 rounded-md"
                 />
                 {formData.imageUrl && !imageFile && (
                   <div className="mt-2">
@@ -242,11 +242,11 @@ export default function StaffManagement() {
                       alt="Current staff" 
                       className="h-20 w-20 rounded-full object-cover"
                     />
-                    <p className="text-xs text-gray-500 mt-1">Current image</p>
+                    <p className="text-xs text-black text-gray-500 mt-1">Current image</p>
                   </div>
                 )}
                 {uploadProgress > 0 && uploadProgress < 100 && (
-                  <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+                  <div className="w-full text-black bg-gray-200 rounded-full h-2.5 mt-2">
                     <div 
                       className="bg-blue-600 h-2.5 rounded-full" 
                       style={{ width: `${uploadProgress}%` }}
@@ -255,13 +255,13 @@ export default function StaffManagement() {
                 )}
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <label className="block text-sm text-black font-medium text-gray-700 mb-1">Full Name</label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-3 py-2 border  border-gray-300 rounded-md"
                   required
                 />
               </div>
