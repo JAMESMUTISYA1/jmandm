@@ -285,7 +285,7 @@ export default function VehiclesPage() {
                     <label className="block text-sm font-medium text-gray-700 mb-1">Vehicle Brand</label>
                     <input
                       type="text"
-                      name="name"
+                      name="brand"
                       value={vehicleData.brand}
                       onChange={handleInputChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md"
