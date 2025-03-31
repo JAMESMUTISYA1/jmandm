@@ -8,19 +8,19 @@ const Hero = () => {
   // Image list with optimized images (WebP format recommended)
   const imageList = [
     {
-      src: '/images/hero1.webp',
+      src: '/images/hero1.png',
       alt: 'Luxury car for sale in Kenya',
       width: 800,
       height: 600
     },
     {
-      src: '/images/hero2.webp',
+      src: '/images/hero2.png',
       alt: 'Affordable used cars in Kenya',
       width: 800,
       height: 600
     },
     {
-      src: '/images/hero3.webp',
+      src: '/images/hero3.png',
       alt: 'Fast car buying process in Kenya',
       width: 800,
       height: 600
